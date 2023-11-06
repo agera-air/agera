@@ -2,7 +2,7 @@
 
 `org.agera.input` currently provides handling of keyboard inputs.
 
-## Example usage
+## Example
 
 ```as3
 import org.agera.events.*;
