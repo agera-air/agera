@@ -6,5 +6,9 @@
 
 Agera extends the Adobe AIR runtime with user interface, input mapping and several utility functions and classes.
 
+## Documentation
+
 * [Getting Started](docs/getting-started.md)
 * [API Reference](docs/api-reference.md)
+* Concepts
+  * [Input](docs/concepts/input.md)
