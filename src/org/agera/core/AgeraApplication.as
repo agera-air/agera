@@ -14,8 +14,8 @@ package org.agera.core {
         /**
          * Returns the current application instance.
          */
-        public function get application(): AgeraApplication {
-            assert(AgeraApplication.mApplication != null, "Application has not been initialized yet");
+        public static function get application(): AgeraApplication {
+            assert(AgeraApplication.mApplication != null, "Application has not been initialized yet.");
             return AgeraApplication.mApplication;
         }
 
@@ -36,7 +36,7 @@ package org.agera.core {
          * mapping actions and determining which actions are pressed.
          */
         public function get input(): Input {
-            assert(this.mInput != null, "application.input must be used after the application is added to the stage");
+            assert(this.mInput != null, "application.input must be used after the application is added to the stage.");
             return this.mInput;
         }
     }
