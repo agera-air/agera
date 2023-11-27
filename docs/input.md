@@ -1,6 +1,6 @@
 # Input
 
-`org.agera.input` currently provides handling of keyboard inputs.
+`org.agera.input` provides handling of keyboard inputs using a collection of actions.
 
 ## Example
 
@@ -12,13 +12,14 @@ import flash.ui.*;
 
 // application: AgeraApplication
 
+// Set the action collection
 application.input.setActions(new <InputAction> [
     new InputAction("actionId")
         .key(new InputKey(Keyboard.SPACE))
         .key(new InputKey(Keyboard.ENTER)),
 ]);
 
-// Determines whether an action is pressed
+// Indicates whether an action is pressed or not
 application.input.isPressed("actionId");
 
 // Event dispatched when any input is pressed

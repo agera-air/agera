@@ -2,5 +2,4 @@
 
 * [Getting started](getting-started.md)
 * [API reference](api-reference.md)
-* Concepts
-  * [Input](concepts/input.md)
+* [Input](input.md)
