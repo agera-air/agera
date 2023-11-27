@@ -2,9 +2,8 @@ package org.agera.util {
     import flash.display.*;
 
     /**
-     * Represents a path to a node relative to another
-     * node. A path consists of components delimited by
-     * forward slashes (<code>/</code>).
+     * Represents a path to a node relative to another node.
+     * A path consists of components delimited by forward slashes (<code>/</code>).
      * 
      * <p><b>Components</b></p>
      *
@@ -20,13 +19,13 @@ package org.agera.util {
      * </ul>
      * </p>
      */
-    public final class NodePath {
+    public final class DisplayPath {
         private var _path: String;
 
         /**
          * Constructs a path with the given string.
          */
-        public function NodePath(path: String) {
+        public function DisplayPath(path: String) {
             this._path = path ?? "";
         }
 
@@ -41,7 +40,7 @@ package org.agera.util {
          * Resolves path on a display object. It returns <code>null</code> if it resolves
          * to no object.
          */
-        public function resolveDisplay(object: DisplayObject): DisplayObject {
+        public function resolve(object: DisplayObject): DisplayObject {
             var components: Array = this._path.split("/");
             var container: DisplayObjectContainer = null;
             for each (var component: String in components) {
