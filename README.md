@@ -4,17 +4,21 @@
 
 # Agera for Adobe AIR
 
-Agera extends Adobe AIR with user interface controls, input actions, and utility functions and classes.
+Agera is a framework for Adobe AIR supporting user interface controls, input actions, and utility functions and classes.
 
-Agera is an alternative to Apache Flex and Feathers UI. It is designed for developers that wish to use the ActionScript language. It does not use the Starling framework.
+It is designed for developers that wish to use the ActionScript language. It does not use the Starling framework.
 
-## Status
+## What is available now
 
-Agera is a work-in-progress.
-
+* [x] Utilities
+* [x] Input
 * [ ] User interface
-* [ ] WebSocket client
+* [ ] WebSocket
 
-## Getting started
+## What this framework's purpose
 
-Refer to the [Documentation](docs/README.md).
+Agera is going to be used in the development of multiplayer games.
+
+## Documentation
+
+[Refer to the documentation](docs/README.md) for full details of the framework.
