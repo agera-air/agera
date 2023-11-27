@@ -15,7 +15,7 @@ It is designed for developers that wish to use the ActionScript language. It doe
 * [ ] User interface
 * [ ] WebSocket
 
-## What this framework's purpose
+## What is this framework's purpose
 
 Agera is going to be used in the development of multiplayer games.
 
