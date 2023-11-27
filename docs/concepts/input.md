@@ -12,7 +12,7 @@ import flash.ui.*;
 
 // application: AgeraApplication
 
-application.input.setMap([
+application.input.setActions(new <InputAction> [
     new InputAction("actionId")
         .key(new InputKey(Keyboard.SPACE))
         .key(new InputKey(Keyboard.ENTER)),

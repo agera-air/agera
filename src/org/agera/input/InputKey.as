@@ -35,5 +35,17 @@ package org.agera.input {
             this.functionKey = value;
             return this;
         }
+
+        /**
+         * Clones the object.
+         */
+        public function clone(): InputKey {
+            const result: InputKey = new InputKey(this.keyCode);
+            result.ctrlKey = this.ctrlKey;
+            result.shiftKey = this.shiftKey;
+            result.altKey = this.altKey;
+            result.functionKey = this.functionKey;
+            return result;
+        }
     }
 }

@@ -41,7 +41,7 @@ package org.agera.util {
          * Resolves path on a display object. It returns <code>null</code> if it resolves
          * to no object.
          */
-        public function resolveDisplayObject(object: DisplayObject): DisplayObject {
+        public function resolveDisplay(object: DisplayObject): DisplayObject {
             var components: Array = this._path.split("/");
             var container: DisplayObjectContainer = null;
             for each (var component: String in components) {

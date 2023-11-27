@@ -6,7 +6,7 @@ package org.agera.util {
      * point. This function updates the <code>x</code>, <code>y</code> and <code>rotation</code>
      * properties of the display object.
      */
-    public function displayObjectCenterOrientation(object: DisplayObject, x: Number, y: Number, rotation: Number): void {
+    public function centerRegOrient(object: DisplayObject, x: Number, y: Number, rotation: Number): void {
         var w: Number = object.width;
         var h: Number = object.height;
         x -= w / 2;
