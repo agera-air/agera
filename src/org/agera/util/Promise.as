@@ -6,8 +6,7 @@ package org.agera.util {
      * The Promise object represents the eventual completion (or failure)
      * of an asynchronous operation and its resulting value.
      * 
-     * <p>For more information, consult
-     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise.</p>
+     * Consult www.developer.mozilla.org for more information on Promise.
      *
      * <p><b>Examples</b></p>
      * 
@@ -17,61 +16,55 @@ package org.agera.util {
      * });
      * 
      * promise
-     *     .then(function(value: *):* {})
-     *     .otherwise(function(error: *):* {})
-     *     .always(function():void {});
+     *     .then(function(value: *): * {
+     *         // Action
+     *     })
+     *     .otherwise(function(error: *): * {
+     *         // Action
+     *     })
+     *     .always(function():void {
+     *         // Action
+     *     });
      * </listing>
      */
-    public final class Promise
-    {
-        // implementation based on
+    public final class Promise {
+        // Implementation based on
         // https://github.com/taylorhakes/promise-polyfill
 
-        private var m_state:Number = 0;
-        private var m_handled:Boolean = false;
-        private var m_value:* = undefined;
-        private var m_deferreds:Vector.<PromiseHandler> = new Vector.<PromiseHandler>;
+        private var mState: Number = 0;
+        private var mHandled: Boolean = false;
+        private var mValue: * = undefined;
+        private var mDeferreds: Vector.<PromiseHandler> = new Vector.<PromiseHandler>;
 
-        private static function bindFunction(fn:Function, thisArg:*):Function
-        {
-            return function(...argumentsList):void
-            {
+        private static function bindFunction(fn: Function, thisArg: *): Function {
+            return function(...argumentsList): void {
                 fn.apply(thisArg, argumentsList);
             };
         }
 
-        public function Promise(fn: Function)
-        {
+        public function Promise(fn: Function) {
             doResolve(fn, this);
         }
 
-        private static function handle(self:Promise, deferred:PromiseHandler):void
-        {
-            while (self.m_state === 3)
-            {
-                self = self.m_value;
+        private static function handle(self:Promise, deferred:PromiseHandler):void {
+            while (self.mState === 3) {
+                self = self.mValue;
             }
-            if (self.m_state === 0)
-            {
-                self.m_deferreds.push(deferred);
+            if (self.mState === 0) {
+                self.mDeferreds.push(deferred);
                 return;
             }
-            self.m_handled = true;
-            Promise._immediateFn(function():void
-            {
-                var cb:Function = self.m_state === 1 ? deferred.onFulfilled : deferred.onRejected;
-                if (cb === null)
-                {
-                    (self.m_state === 1 ? Promise.privateResolve : Promise.privateReject)(deferred.promise, self.m_value);
+            self.mHandled = true;
+            Promise._immediateFn(function():void {
+                var cb:Function = self.mState === 1 ? deferred.onFulfilled : deferred.onRejected;
+                if (cb === null) {
+                    (self.mState === 1 ? Promise.privateResolve : Promise.privateReject)(deferred.promise, self.mValue);
                     return;
                 }
-                var ret:* = undefined;
-                try
-                {
-                    ret = cb(self.m_value);
-                }
-                catch (e:*)
-                {
+                var ret: * = undefined;
+                try {
+                    ret = cb(self.mValue);
+                } catch (e: *) {
                     Promise.privateReject(deferred.promise, e);
                     return;
                 }
@@ -79,90 +72,78 @@ package org.agera.util {
             });
         }
 
-        private static function privateResolve(self:Promise, newValue:*):void
-        {
-            try
-            {
+        private static function privateResolve(self:Promise, newValue: *):void {
+            try {
                 // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
-                if (newValue === self)
-                {
+                if (newValue === self) {
                     throw new TypeError('A promise cannot be resolved with itself.');
                 }
-                if (newValue is Promise)
-                {
-                    self.m_state = 3;
-                    self.m_value = newValue;
+                if (newValue is Promise) {
+                    self.mState = 3;
+                    self.mValue = newValue;
                     Promise.finale(self);
                     return;
                 }
-                self.m_state = 1;
-                self.m_value = newValue;
+                self.mState = 1;
+                self.mValue = newValue;
                 Promise.finale(self);
-            }
-            catch (e:*)
-            {
+            } catch (e: *) {
                 Promise.privateReject(self, e);
             }
         }
 
-        private static function privateReject(self:Promise, newValue:*):void
-        {
-            self.m_state = 2;
-            self.m_value = newValue;
+        private static function privateReject(self:Promise, newValue: *):void {
+            self.mState = 2;
+            self.mValue = newValue;
             Promise.finale(self);
         }
 
-        private static function finale(self:Promise):void
-        {
-            if (self.m_state === 2 && self.m_deferreds.length === 0)
-            {
-                Promise._immediateFn(function():void
-                {
-                    if (!self.m_handled)
-                    {
-                        Promise._unhandledRejectionFn(self.m_value);
+        private static function finale(self:Promise):void {
+            if (self.mState === 2 && self.mDeferreds.length === 0) {
+                Promise._immediateFn(function():void {
+                    if (!self.mHandled) {
+                        Promise._unhandledRejectionFn(self.mValue);
                     }
                 });
             }
 
-            for (var i:Number = 0, len:Number = self.m_deferreds.length; i < len; i++)
-            {
-                handle(self, self.m_deferreds[i]);
+            for (var i: Number = 0, len: Number = self.mDeferreds.length; i < len; i++) {
+                handle(self, self.mDeferreds[i]);
             }
-            self.m_deferreds = null;
+            self.mDeferreds = null;
         }
 
         /**
          * Takes a potentially misbehaving resolver function and make sure
-         * onFulfilled and onRejected are only called once.
+         * `onFulfilled` and `onRejected` are only called once.
          *
          * Makes no guarantees about asynchrony.
          */
-        private static function doResolve(fn:Function, self:Promise):void
-        {
+        private static function doResolve(fn:Function, self:Promise):void {
             var done:Boolean = false;
-            try
-            {
+            try {
                 fn(
-                    function(value:*):*
-                    {
-                        if (done) return;
+                    function(value: *): * {
+                        if (done) {
+                            return;
+                        }
                         done = true;
                         Promise.privateResolve(self, value);
                     },
-                    function(reason:*):*
-                    {
-                        if (done) return;
+                    function(reason: *): * {
+                        if (done) {
+                            return;
+                        }
                         done = true;
                         Promise.privateReject(self, reason);
                     }
                 );
-            }
-            catch (ex:*)
-            {
-                if (done) return;
+            } catch (exception: *) {
+                if (done) {
+                    return;
+                }
                 done = true;
-                Promise.privateReject(self, ex);
+                Promise.privateReject(self, exception);
             }
         }
 
@@ -174,16 +155,13 @@ package org.agera.util {
          * describe the outcome of each promise.
          * <p><b>Example:</b></p>
          * <listing version="3.0">
-         * const promise1:Promise = Promise.resolve(3);
-         * const promise2:Promise = new Promise(function(resolve:Function, reject:Function):void
-         * {
+         * const promise1: Promise = Promise.resolve(3);
+         * const promise2: Promise = new Promise(function(resolve: Function, reject: Function): void {
          *     setTimeout(reject, 100, 'foo');
          * });
          * Promise.allSettled([promise1, promise2])
-         *     .then(function(results:Array):void
-         *     {
-         *         for each (var result:* in results)
-         *         {
+         *     .then(function(results: Array): void {
+         *         for each (var result: * in results) {
          *             trace(result.status);
          *         }
          *     });
@@ -210,31 +188,23 @@ package org.agera.util {
          * the returned promise is still asynchronously (instead of synchronously) fulfilled.</p>
          * </ul>
          */
-        public static function allSettled(promises:Array):Promise
-        {
-            return new Promise(function(resolve:Function, reject:Function):void
-            {
+        public static function allSettled(promises:Array):Promise {
+            return new Promise(function(resolve:Function, reject:Function):void {
                 var args:Array = promises.slice(0);
-                if (args.length === 0)
-                {
+                if (args.length === 0) {
                     resolve([]);
                     return;
                 }
-                var remaining:Number = args.length;
-                function res(i:Number, val:*):void
-                {
-                    if (val is Promise)
-                    {
+                var remaining: Number = args.length;
+                function res(i: Number, val: *):void {
+                    if (val is Promise) {
                         Promise(val).then(
-                            function(val:*):*
-                            {
+                            function(val: *): * {
                                 res(i, val);
                             },
-                            function(e:*):*
-                            {
+                            function(e: *): * {
                                 args[i] = { status: 'rejected', reason: e };
-                                if (--remaining === 0)
-                                {
+                                if (--remaining === 0) {
                                     resolve(args);
                                 }
                             }
@@ -242,43 +212,31 @@ package org.agera.util {
                         return;
                     }
                     args[i] = { status: 'fulfilled', value: val };
-                    if (--remaining === 0)
-                    {
+                    if (--remaining === 0) {
                         resolve(args);
                     }
                 }
-                for (var i:Number = 0; i < args.length; ++i)
-                {
+                for (var i: Number = 0; i < args.length; ++i) {
                     res(i, args[i]);
                 }
             });
         } // allSettled
 
-        /**
-         * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any
-         */
-        public static function any(promises:Array):Promise
-        {
-            return new Promise(function(resolve:Function, reject:Function):void
-            {
+        public static function any(promises:Array):Promise {
+            return new Promise(function(resolve:Function, reject:Function):void {
                 var args:Array = promises.slice(0);
-                if (args.length === 0)
-                {
+                if (args.length === 0) {
                     reject(undefined);
                     return;
                 }
                 var rejectionReasons:Array = [];
-                for (var i:Number = 0; i < args.length; ++i)
-                {
-                    try
-                    {
+                for (var i: Number = 0; i < args.length; ++i) {
+                    try {
                         Promise.resolve(args[i])
                             .then(resolve)
-                            .$catch(function(error:*):*
-                            {
+                            .$catch(function(error: *): * {
                                 rejectionReasons.push(error);
-                                if (rejectionReasons.length === args.length)
-                                {
+                                if (rejectionReasons.length === args.length) {
                                     reject(
                                         new AggregateError(
                                             rejectionReasons,
@@ -287,81 +245,60 @@ package org.agera.util {
                                     );
                                 }
                             });
-                    }
-                    catch (ex:*)
-                    {
-                        reject(ex);
+                    } catch (exception: *) {
+                        reject(exception);
                     }
                 }
             });
         } // any
 
-        public function always(callback:Function):Promise
-        {
+        public function always(callback:Function):Promise {
             return $finally(callback);
         }
 
-        public function $finally(callback:Function):Promise
-        {
+        public function $finally(callback:Function):Promise {
             return this.then(
-                function(value:*):*
-                {
-                    return Promise.resolve(callback()).then(function(_:*):*
-                    {
+                function(value: *): * {
+                    return Promise.resolve(callback()).then(function(_: *): * {
                         return value;
                     });
                 },
-                function(reason:*):*
-                {
-                    return Promise.resolve(callback()).then(function(_:*):*
-                    {
+                function(reason: *): * {
+                    return Promise.resolve(callback()).then(function(_: *): * {
                         return Promise.reject(reason);
                     });
                 }
             );
         } // $finally
 
-        public function otherwise(onRejected:Function):Promise
-        {
+        public function otherwise(onRejected:Function):Promise {
             return this.$catch(onRejected);
         }
 
-        public function $catch(onRejected:Function):Promise
-        {
+        public function $catch(onRejected:Function):Promise {
             return this.then(null, onRejected);
         }
 
-        public function then(onFulfilled:Function, onRejected:Function = null):Promise
-        {
-            var prom:Promise = new Promise(function(_a:*, _b:*):void {});
+        public function then(onFulfilled:Function, onRejected:Function = null):Promise {
+            var prom:Promise = new Promise(function(_a: *, _b: *):void {});
             Promise.handle(this, new PromiseHandler(onFulfilled, onRejected, prom));
             return prom;
         }
 
-        /**
-         * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all.
-         */
-        public static function all(promises:Array):Promise
-        {
-            return new Promise(function(resolve:Function, reject:Function):void
-            {
+        public static function all(promises:Array):Promise {
+            return new Promise(function(resolve:Function, reject:Function):void {
                 var args:Array = promises.slice(0);
-                if (args.length === 0)
-                {
+                if (args.length === 0) {
                     resolve([]);
                     return;
                 }
-                var remaining:Number = args.length;
+                var remaining: Number = args.length;
 
-                function res(i:Number, val:*):void
-                {
-                    try
-                    {
-                        if (val is Promise)
-                        {
+                function res(i: Number, val: *):void {
+                    try {
+                        if (val is Promise) {
                             Promise(val).then(
-                                function(val:*):*
-                                {
+                                function(val: *): * {
                                     res(i, val);
                                 },
                                 reject
@@ -369,72 +306,49 @@ package org.agera.util {
                             return;
                         }
                         args[i] = val;
-                        if (--remaining === 0)
-                        {
+                        if (--remaining === 0) {
                             resolve(args);
                         }
-                    }
-                    catch (ex:*)
-                    {
-                        reject(ex);
+                    } catch (exception: *) {
+                        reject(exception);
                     }
                 }
 
-                for (var i:Number = 0; i < args.length; i++)
-                {
+                for (var i: Number = 0; i < args.length; i++) {
                     res(i, args[i]);
                 }
             });
         } // all
 
-        /**
-         * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve
-         */
-        public static function resolve(value:*):Promise
-        {
-            if (value is Promise)
-            {
+        public static function resolve(value: *):Promise {
+            if (value is Promise) {
                 return Promise(value);
             }
 
-            return new Promise(function(resolve:Function, reject:Function):void
-            {
+            return new Promise(function(resolve:Function, reject:Function):void {
                 resolve(value);
             });
         }
 
-        /**
-         * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject
-         */
-        public static function reject(value:*):Promise
-        {
-            return new Promise(function(resolve:Function, reject:Function):void
-            {
+        public static function reject(value: *):Promise {
+            return new Promise(function(resolve:Function, reject:Function):void {
                 reject(value);
             });
         }
 
-        /**
-         * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race
-         */
-        public static function race(promises:Array):Promise
-        {
-            return new Promise(function(resolve:Function, reject:Function):void
-            {
-                for each (var arg:* in promises)
-                {
+        public static function race(promises:Array):Promise {
+            return new Promise(function(resolve:Function, reject:Function):void {
+                for each (var arg: * in promises) {
                     Promise.resolve(arg).then(resolve, reject);
                 }
             });
         }
 
-        private static function _immediateFn(fn:Function):void
-        {
+        private static function _immediateFn(fn:Function):void {
             setTimeout(fn, 0);
         }
 
-        private static function _unhandledRejectionFn(err:*):void
-        {
+        private static function _unhandledRejectionFn(err: *):void {
             trace('Possible Unhandled Promise Rejection:', err);
         }
     }
