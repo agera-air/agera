@@ -26,7 +26,7 @@ package org.agera.util {
          * Constructs a path with the given string.
          */
         public function DisplayPath(path: String) {
-            this._path = path ?? "";
+            this._path = path || "";
         }
 
         /**
@@ -50,7 +50,7 @@ package org.agera.util {
                         return null;
                     }
                     object = container.numChildren == 0 ? null : container.getChildAt(component == ".first" ? 0 : container.numChildren - 1);
-                } else if (component = "..") {
+                } else if (component == "..") {
                     object = object.parent;
                 } else {
                     container = object as DisplayObjectContainer;

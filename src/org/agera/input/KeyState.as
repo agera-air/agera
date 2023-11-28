@@ -8,5 +8,7 @@ package org.agera.input {
         public var ctrlKey: Boolean = false;
         public var shiftKey: Boolean = false;
         public var altKey: Boolean = false;
+
+        public function KeyState() {}
     }
 }

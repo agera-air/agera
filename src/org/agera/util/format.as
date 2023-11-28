@@ -38,7 +38,7 @@ package org.agera.util {
      * </listing>
      */
     public function format(string: String, argumentsObject: *): String {
-        argumentsObject = argumentsObject ?? {};
+        argumentsObject = argumentsObject === undefined || argumentsObject === null ? {} : argumentsObject;
         if (argumentsObject is Array) {
             var array: Array = argumentsObject as Array;
             argumentsObject = {};
