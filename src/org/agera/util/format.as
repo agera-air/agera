@@ -24,6 +24,7 @@ package org.agera.util {
      *   <li><code>{"escaped"}</code></li>
      *   <li><code>{'escaped'}</code></li>
      * </ul>
+     * </p>
      * 
      * <p>The quotes form is used for incorporating escaped sequences.</p>
      * 

@@ -185,7 +185,7 @@ package org.agera.util {
          *   </ul>
          * </li>
          * <p>If the iterable passed is non-empty but contains no pending promises,
-         * the returned promise is still asynchronously (instead of synchronously) fulfilled.</p>
+         *    the returned promise is still asynchronously (instead of synchronously) fulfilled.</p>
          * </ul>
          */
         public static function allSettled(promises:Array):Promise {
