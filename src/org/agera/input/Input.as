@@ -80,7 +80,7 @@ package org.agera.input {
         /**
          * Indicates whether an action is pressed or not.
          *
-         * @throws TypeError Thrown if the specified action name is not set.
+         * @throws Error Thrown if the specified action name is not set.
          */
         public function isPressed(actionName: String): Boolean {
             const action: InputAction = this.actions[actionName] as InputAction;
