@@ -1,5 +1,7 @@
 package org.agera.tween {
     import flash.display.*;
+    import flash.geom.*;
+    import flash.utils.*;
     import org.agera.util.*;
 
     /**
@@ -9,13 +11,23 @@ package org.agera.tween {
      * <p><b>Property paths</b></p>
      * 
      * <p>Property paths consist of a path as specified by the <code>DisplayPath</code> class), with
-     * the trailing segment identifying the property name. Here are a few examples:
+     * either one trailing segment identifying the property name or two trailing segments identifying
+     * <code>x</code> or <code>y</code> from a <code>Point</code> property. Here are a few examples:
      * 
      * <listing version="3.0">
      * "y"
      * "myButton/minWidth"
+     * "somePoint/x"
      * </listing>
      * </p>
+     * 
+     * <p><b>Points</b></p>
+     * 
+     * <p>The Agera tweener supports tweening <code>Number</code> and <code>flash.geom.Point</code> property values.</p>
+     * 
+     * <p>When specifying the property path, a <code>propertyName/x</code> or <code>propertyName/y</code> property path
+     * where <code>propertyName</code> identifies a <code>Point</code> property, the Agera tweener updates the
+     * <code>x</code> or <code>y</code> properties after computing the <code>propertyName</code> property.</p>
      * 
      * <p><b>Syntax</b></p>
      * 
