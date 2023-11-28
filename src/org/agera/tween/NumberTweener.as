@@ -5,8 +5,8 @@ package org.agera.tween {
     internal final class NumberTweener extends Tweener {
         private var finalValue: Number;
 
-        public function NumberTweener(transitionType: String, easeType: String, finalValue: Number) {
-            super(transitionType, easeType);
+        public function NumberTweener(easing: String, finalValue: Number) {
+            super(easing);
             this.finalValue = finalValue;
         }
 

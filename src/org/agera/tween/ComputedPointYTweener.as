@@ -8,8 +8,8 @@ package org.agera.tween {
         private var propertyName: String;
         private var finalValue: Number;
 
-        public function ComputedPointYTweener(transitionType: String, easeType: String, propertyName: String, finalValue: Number) {
-            super(transitionType, easeType);
+        public function ComputedPointYTweener(easing: String, propertyName: String, finalValue: Number) {
+            super(easing);
             this.propertyName = propertyName;
             this.finalValue = finalValue;
         }

@@ -7,8 +7,8 @@ package org.agera.tween {
     internal final class PointTweener extends Tweener {
         private var finalValue: Point;
 
-        public function PointTweener(transitionType: String, easeType: String, finalValue: Point) {
-            super(transitionType, easeType);
+        public function PointTweener(easing: String, finalValue: Point) {
+            super(easing);
             this.finalValue = finalValue;
         }
 

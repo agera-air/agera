@@ -5,12 +5,10 @@ package org.agera.tween {
      * @private
      */
     internal class Tweener {
-        protected var transitionType: String;
-        protected var easeType: String;
+        protected var easing: String;
 
-        public function Tweener(transitionType: String, easeType: String) {
-            this.transitionType = transitionType;
-            this.easeType = easeType;
+        public function Tweener(easing: String) {
+            this.easing = easing;
         }
 
         /**

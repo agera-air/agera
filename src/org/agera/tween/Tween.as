@@ -38,8 +38,7 @@ package org.agera.tween {
      * import org.agera.tween.*;
      * 
      * new Tween(object, "propertyPath", value, seconds);
-     * new Tween(object, "propertyPath", value, seconds, transitionType);
-     * new Tween(object, "propertyPath", value, seconds, transitionType, easeType);
+     * new Tween(object, "propertyPath", value, seconds, easing);
      * </listing>
      * </p>
      */
@@ -49,10 +48,9 @@ package org.agera.tween {
          * @param propertyPath Property path consisting of a <code>DisplayPath</code> with a trailing property name segment.
          * @param value Final value.
          * @param seconds Duration in seconds.
-         * @param transitionType One of the constants defined in <code>TransitionType</code>.
-         * @param easeType One of the constants defined in <code>EaseType</code>.
+         * @param easing One of the constants defined in the <code>Easing</code> class.
          */
-        public function Tween(object: Object, propertyPath: String, value: *, seconds: Number, transitionType: String = TransitionType.LINEAR, easeType: String = EaseType.IN_OUT) {
+        public function Tween(object: Object, propertyPath: String, value: *, seconds: Number, easing: String = Easing.LINEAR) {
             const self: Tween = this;
 
             var pointNameToCompute: String = null;
@@ -81,13 +79,14 @@ package org.agera.tween {
             var tweener: Tweener = null;
             if (pointNameToCompute != null) {
                 assert(value is Number, "Final value must be a Number value.");
-                tweener = propertyName == "y" ? new ComputedPointYTweener(transitionType, easeType, pointNameToCompute, Number(value)) : new ComputedPointXTweener(transitionType, easeType, pointNameToCompute, Number(value));
+                tweener = propertyName == "y" ? new ComputedPointYTweener(easing, pointNameToCompute, Number(value)) : new ComputedPointXTweener(easing, pointNameToCompute, Number(value));
             } else if (object[propertyName] is Point) {
                 assert(value is Point, "Final value must be a Point object.");
-                tweener = new PointTweener(transitionType, easeType, Point(value));
+                tweener = new PointTweener(easing, Point(value));
             } else {
+                assert(object[propertyName] is Number, "Property must be of either Point or Number data type.");
                 assert(value is Number, "Final value must be a Number value.");
-                tweener = new NumberTweener(transitionType, easeType, Number(value));
+                tweener = new NumberTweener(easing, Number(value));
             }
 
             // Execute the tweener
