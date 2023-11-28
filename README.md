@@ -12,6 +12,8 @@ It is designed for developers that wish to use the ActionScript language. It doe
 
 * [x] Utilities
 * [x] Input
+* [ ] Tweening
+  * [ ] Stop
 * [ ] User interface
 * [ ] WebSocket
 
