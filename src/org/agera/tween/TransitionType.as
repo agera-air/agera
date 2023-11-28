@@ -27,6 +27,11 @@ package org.agera.tween {
          * Indicates a quintic (power of 5) function.
          */
         public static const QUINTIC: String = "quintic";
+
+        public static const CIRCULAR: String = "circular";
+
+        public static const EXPONENTIAL: String = "exponential";
+
         /**
          * Indicates an elastic function.
          */
