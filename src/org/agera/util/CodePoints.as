@@ -1,8 +1,8 @@
 package org.agera.util {
     /**
-     * Unicode Code Point utilities.
+     * Unicode Code Point utility functions.
      */
-    public final class UnicodeCodePoint {
+    public final class CodePoints {
         /**
          * Converts a code point into a string.
          * 

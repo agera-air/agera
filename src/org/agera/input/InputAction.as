@@ -43,7 +43,8 @@ package org.agera.input {
         }
 
         /**
-         * Clones a <code>Dictionary</code> of <code>[String, InputAction]</code> pairs.
+         * Clones a <code>Dictionary</code> of <code>[String, InputAction]</code> pairs
+         * by cloning each pair.
          */
         public static function cloneCollection(collection: Dictionary): Dictionary {
             const result: Dictionary = new Dictionary();
@@ -55,7 +56,7 @@ package org.agera.input {
 
         /**
          * Extends a <code>Dictionary</code> of <code>[String, InputAction]</code> pairs
-         * with another compatible <code>Dictionary</code>.
+         * with another compatible <code>Dictionary</code>, cloning each pair.
          */
         public static function extendCollection(collection: Dictionary, extendWith: Dictionary): void {
             for (var name: String in extendWith) {
