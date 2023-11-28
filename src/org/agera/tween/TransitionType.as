@@ -8,6 +8,10 @@ package org.agera.tween {
          */
         public static const LINEAR: String = "linear";
         /**
+         * Indicates a sine function.
+         */
+        public static const SINE: String = "sine";
+        /**
          * Indicates a quadratic (power of 2) function.
          */
         public static const QUADRATIC: String = "quadratic";
@@ -24,12 +28,16 @@ package org.agera.tween {
          */
         public static const QUINTIC: String = "quintic";
         /**
+         * Indicates an elastic function.
+         */
+        public static const ELASTIC: String = "elastic";
+        /**
          * Indicates an interpolation with bouncing at the end.
          */
         public static const BOUNCE: String = "bounce";
         /**
-         * Indicates an interpolation with spring towards the end.
+         * Indicates a back function.
          */
-        public static const SPRING: String = "spring";
+        public static const BACK: String = "back";
     }
 }
