@@ -5,6 +5,7 @@ package org.agera.events {
         public static const INPUT_PRESSED: String = "inputPressed";
         public static const INPUT_RELEASED: String = "inputReleased";
         public static const ACTIONS_UPDATE: String = "actionsUpdate";
+        public static const FINISHED: String = "finished";
 
         public function AgeraEvent(type: String) {
             super(type);
