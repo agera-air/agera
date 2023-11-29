@@ -1,3 +1,3 @@
 # API reference
 
-Unavailable.
+Consult the [API reference](https://agera-air.github.io/api-reference/agera).

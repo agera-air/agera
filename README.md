@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://agera-air.github.io/api-reference/">
+  <a href="https://agera-air.github.io/api-reference/agera">
     <img src="https://img.shields.io/badge/ActionScript%20API%20documentation-gray">
   </a>
 </p>
@@ -28,3 +28,7 @@ Agera is going to be used in the development of multiplayer games.
 ## Documentation
 
 [Refer to the documentation](docs/README.md) for full details of the framework.
+
+## License
+
+Apache 2.0
