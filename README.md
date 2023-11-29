@@ -2,6 +2,13 @@
   <img src="https://github.com/agera-sdk/agera/blob/master/assets/logo-72-ppi.png?raw=true" width="500">
 </p>
 
+<p align="center">
+  <a href="https://agera-air.github.io/api-reference/">
+    <img src="https://img.shields.io/badge/ActionScript%20API%20documentation-gray
+">
+  </a>
+</p>
+
 # Agera for Adobe AIR
 
 Agera is a framework for Adobe AIR supporting user interface controls, input actions, and utility functions and classes.
@@ -12,8 +19,6 @@ It is designed for developers that wish to use the ActionScript language. It doe
 
 * [x] Utilities
 * [x] Input
-* [ ] Tweening
-  * [ ] Stop
 * [ ] User interface
 * [ ] WebSocket
 

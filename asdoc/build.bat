@@ -1,2 +1,2 @@
 @echo off
-aasdoc --doc-sources+=src -o=asdoc/html
+aasdoc --library-path+=libs --doc-sources+=src -o=asdoc/html

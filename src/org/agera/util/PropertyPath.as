@@ -1,6 +1,4 @@
 package org.agera.util {
-    import flash.display.*;
-
     /**
      * Resolves a property path.
      * A path consists of components delimited by forward slashes (<code>/</code>).
@@ -29,16 +27,14 @@ package org.agera.util {
         /**
          * Sets the value of a property on an object by its path.
          */
-        public static function set(object: *, path: String, value: *): * {
+        public static function set(object: *, path: String, value: *): void {
+            assert(!!object, "PropertyPath.set() received undefined base object.");
             var split: Array = path.split("/");
             var propertyName: String = split.pop();
             assert(propertyName != null, "Property name must be specified.");
             for each (var component: String in split) {
                 object = object[component];
-                if (object === undefined) {
-                    return undefined;
-                }
-                assert(object, "Found undefined object when invoking PropertyPath.set().");
+                assert(!!object, "Found undefined object when invoking PropertyPath.set().");
             }
             object[propertyName] = value;
         }
