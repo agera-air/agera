@@ -8,11 +8,9 @@
   </a>
 </p>
 
-# Agera for Adobe AIR
+# Agera for AIR SDK
 
-Agera is a framework for Adobe AIR supporting user interface controls, input actions, and utility functions and classes.
-
-It is designed for developers that wish to use the ActionScript language. It does not use the Starling framework.
+Agera is a framework for AIR SDK supporting user interface controls, input actions, and utility functions and classes.
 
 ## What is available now
 
