@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <a href="https://agera-air.github.io/api-reference/agera">
-    <img src="https://img.shields.io/badge/ActionScript%20API%20documentation-gray">
+  <a href="https://agera-air.github.io/api/agera">
+    <img src="https://img.shields.io/badge/ActionScript%20API%20Documentation-gray">
   </a>
 </p>
 
