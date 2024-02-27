@@ -10,18 +10,13 @@
 
 # Agera for AIR SDK
 
-Agera is a framework for AIR SDK supporting user interface controls, input actions, and utility functions and classes.
+Agera is a framework for AIR SDK supporting input actions, user interface and miscellaneous utilities.
 
 ## What is available now
 
-* [x] Utilities
 * [x] Input
+* [x] Utilities
 * [ ] User interface
-* [ ] WebSocket
-
-## What is this framework's purpose
-
-Agera is going to be used in the development of multiplayer games.
 
 ## Documentation
 
