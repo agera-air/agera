@@ -1,4 +1,4 @@
-package org.agera.input {
+package agera.input {
     import flash.events.KeyboardEvent;
 
     /**

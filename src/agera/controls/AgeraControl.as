@@ -1,8 +1,8 @@
-package org.agera.controls {
+package agera.controls {
     import flash.display.*;
-    import org.agera.core.*;
-    import org.agera.events.*;
-    import org.agera.util.*;
+    import agera.core.*;
+    import agera.events.*;
+    import agera.util.*;
 
     /**
      * The base class used for user interfaces in Agera.

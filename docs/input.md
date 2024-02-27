@@ -1,12 +1,12 @@
 # Input
 
-`org.agera.input` provides handling of keyboard inputs using a collection of actions.
+`agera.input` provides handling of keyboard inputs using a collection of actions.
 
 ## Example
 
 ```as3
-import org.agera.events.*;
-import org.agera.input.*;
+import agera.events.*;
+import agera.input.*;
 import flash.events.*;
 import flash.ui.*;
 

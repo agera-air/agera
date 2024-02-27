@@ -1,6 +1,6 @@
-package org.agera.core {
-    import org.agera.util.*;
-    import org.agera.input.*;
+package agera.core {
+    import agera.util.*;
+    import agera.input.*;
     import flash.display.*;
     import flash.events.*;
 

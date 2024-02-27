@@ -1,29 +1,29 @@
-package org.agera.input {
+package agera.input {
     import flash.display.*;
     import flash.events.*;
     import flash.utils.*;
-    import org.agera.events.AgeraEvent;
+    import agera.events.AgeraEvent;
     import flash.ui.Keyboard;
-    import org.agera.util.assert;
+    import agera.util.assert;
 
     /**
      * Dispatched when any key or gamepad button is pressed.
      *
-     * @eventType org.agera.events.AgeraEvent.INPUT_PRESSED
+     * @eventType agera.events.AgeraEvent.INPUT_PRESSED
      */
-    [Event(name = "inputPressed", type = "org.agera.events.AgeraEvent")]
+    [Event(name = "inputPressed", type = "agera.events.AgeraEvent")]
     /**
      * Dispatched when any key or gamepad button is released.
      *
-     * @eventType org.agera.events.AgeraEvent.INPUT_RELEASED
+     * @eventType agera.events.AgeraEvent.INPUT_RELEASED
      */
-    [Event(name = "inputReleased", type = "org.agera.events.AgeraEvent")]
+    [Event(name = "inputReleased", type = "agera.events.AgeraEvent")]
     /**
      * Dispatched when the collection of actions is updated.
      *
-     * @eventType org.agera.events.AgeraEvent.ACTIONS_UPDATE
+     * @eventType agera.events.AgeraEvent.ACTIONS_UPDATE
      */
-    [Event(name = "actionsUpdate", type = "org.agera.events.AgeraEvent")]
+    [Event(name = "actionsUpdate", type = "agera.events.AgeraEvent")]
     /**
      * Collection for keyboard and gamepad inputs.
      */

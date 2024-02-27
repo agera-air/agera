@@ -1,4 +1,4 @@
-package org.agera.events {
+package agera.events {
     import flash.events.*;
 
     public class AgeraEvent extends Event {

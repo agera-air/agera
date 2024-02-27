@@ -16,7 +16,7 @@ The entry point for an Agera application looks like this:
 package {
     import flash.display.*;
     import flash.events.*;
-    import org.agera.core.*;
+    import agera.core.*;
 
     public final class Main extends AgeraApplication {
         public function Main() {
