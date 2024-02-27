@@ -24,4 +24,4 @@ Agera is a framework for AIR SDK supporting input actions, user interface and mi
 
 ## License
 
-Apache 2.0
+Apache License 2.0
