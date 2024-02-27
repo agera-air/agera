@@ -3,14 +3,14 @@
 </p>
 
 <p align="center">
-  <a href="https://agera-air.github.io/api/agera">
-    <img src="https://img.shields.io/badge/ActionScript%20API%20Documentation-gray">
+  <a href="https://hydroper.gitbook.io/agera-air/">
+    <img src="https://img.shields.io/badge/Documentation-gray">
   </a>
 </p>
 
-# Agera for AIR SDK
+# Agera for AIR
 
-Agera is a framework for AIR SDK supporting input actions, user interface and miscellaneous utilities.
+Agera is a framework for Samsung HARMAN AIR supporting input actions, user interface and miscellaneous.
 
 ## What is available now
 
@@ -20,7 +20,7 @@ Agera is a framework for AIR SDK supporting input actions, user interface and mi
 
 ## Documentation
 
-[Refer to the documentation](docs/README.md) for full details of the framework.
+[Refer to the documentation](https://hydroper.gitbook.io/agera-air/) for full details of the framework.
 
 ## License
 
