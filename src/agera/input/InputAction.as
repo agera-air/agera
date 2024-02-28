@@ -1,4 +1,5 @@
 package agera.input {
+    import flash.events.KeyboardEvent;
     import flash.utils.Dictionary;
 
     /**
@@ -84,6 +85,12 @@ package agera.input {
                 result[action.name] = action;
             }
             return result;
+        }
+
+        public function matchesKeyboardEvent(event: KeyboardEvent): Boolean {
+            return this.mKeys.some(function(key: InputKey, index: int, vector: Vector.<InputKey>): Boolean {
+                return key.matchesKeyboardEvent(event);
+            });
         }
     }
 }

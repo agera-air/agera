@@ -48,6 +48,12 @@ package agera.input {
             return result;
         }
 
-        public function matchesKeyboardEvent(event: KeyboardEvent): Boolean {}
+        public function matchesKeyboardEvent(event: KeyboardEvent): Boolean {
+            return this.keyCode == event.keyCode
+                && (this.ctrlKey ? event.ctrlKey : !event.ctrlKey)
+                && (this.shiftKey ? event.shiftKey : !event.shiftKey)
+                && (this.altKey ? event.altKey : !event.altKey)
+                && (this.functionKey ? event.functionKey : !event.functionKey);
+        }
     }
 }
