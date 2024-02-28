@@ -95,7 +95,7 @@ package agera.ui {
                 }
                 p = p.parent;
             }
-            inheritedTheme = inheritedTheme ?? AgeraApplication.application.defaultTheme;
+            inheritedTheme ||= AgeraApplication.application.defaultTheme;
             var inherited: * = inheritedTheme != null ? inheritedTheme.get(thisConstructor) : undefined;
             if (inherited !== undefined) {
                 extendDeep(this.mControl.mThemeProperties, inherited);

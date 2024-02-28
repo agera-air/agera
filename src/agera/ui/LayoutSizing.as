@@ -26,7 +26,7 @@ package agera.ui {
          * Constructor.
          */
         public function LayoutSizing(options: *) {
-            options = options ?? {};
+            options ||= {};
             for (var key: String in options) {
                 var value: * = options[key];
                 switch (key) {
