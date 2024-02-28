@@ -61,6 +61,8 @@ package agera.input {
          *   <li><code>"navigateRight"</code> — Right navigation in the user interface.</li>
          *   <li><code>"navigateUp"</code> — Up navigation in the user interface.</li>
          *   <li><code>"navigateDown"</code> — Down navigation in the user interface.</li>
+         *   <li><code>"focusPrevious"</code> — Focus previous element in the user interface.</li>
+         *   <li><code>"focusNext"</code> — Focus next element in the user interface.</li>
          * </ul>
          * </p>
          */
@@ -74,6 +76,11 @@ package agera.input {
                     .key(new InputKey(Keyboard.UP)),
                 new InputAction("navigateDown")
                     .key(new InputKey(Keyboard.DOWN)),
+                new InputAction("focusPrevious")
+                    .key(new InputKey(Keyboard.TAB)
+                        .setShiftKey(true)),
+                new InputAction("focusNext")
+                    .key(new InputKey(Keyboard.TAB)),
             ]);
         }
 
