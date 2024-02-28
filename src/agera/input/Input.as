@@ -43,6 +43,14 @@ package agera.input {
         }
 
         /**
+         * Returns an action specified by the name.
+         */
+        public function getAction(actionName: String): InputAction {
+            var r: InputAction = this.actions[actionName] as InputAction;
+            return r == null ? null : r.clone();
+        }
+
+        /**
          * Sets the action collection of the <code>Input</code> object.
          */
         public function setActions(collection: Vector.<InputAction>): void {

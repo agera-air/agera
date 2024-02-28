@@ -53,32 +53,24 @@ package agera.ui {
         /**
          * Indicates the neighbor control to focus when
          * pressing <code>"navigateUp"</code>.
-         * 
-         * If not specified, it is deduced automatically.
          */
         public var focusNeighborTop: String = null;
 
         /**
          * Indicates the neighbor control to focus when
          * pressing <code>"navigateDown"</code>.
-         * 
-         * If not specified, it is deduced automatically.
          */
         public var focusNeighborBottom: String = null;
 
         /**
          * Indicates the neighbor control to focus when
          * pressing <code>"navigateLeft"</code>.
-         * 
-         * If not specified, it is deduced automatically.
          */
         public var focusNeighborLeft: String = null;
 
         /**
          * Indicates the neighbor control to focus when
          * pressing <code>"navigateRight"</code>.
-         * 
-         * If not specified, it is deduced automatically.
          */
         public var focusNeighborRight: String = null;
 
@@ -323,6 +315,83 @@ package agera.ui {
 
         private function UIControl_handleFocusEvent(event: FocusEvent): void {
             this.updateSkin();
+        }
+
+        private function UIControl_handleKeyDownEvent(event: KeyboardEvent): void {
+            // # focus switch
+
+            if (!this.hasFocus) {
+                return;
+            }
+
+            var app: AgeraApplication = AgeraApplication.application;
+            var pointedTo: DisplayObject = null;
+
+            // next focus
+            if (app.input.getAction("uiFocusNext").matchesKeyboardEvent(event)) {
+                var next: DisplayObject = null;
+                if (this.focusNeighborNext != null) {
+                    next = DisplayListPath.resolve(this, this.focusNeighborNext);
+                    if (next == null || !DisplayObject_focusable(next)) {
+                        throw new Error("Specified focusNeighborNext resolves to no object or is not focusable.");
+                    }
+                } else {
+                    next = UIControl_Hierarchy.nextFocusTarget(this);
+                }
+                if (next != null) {
+                    this.stage.focus = next as InteractiveObject;
+                }
+            // previous focus
+            } else if (app.getAction("uiFocusPrevious").matchesKeyboardEvent(event)) {
+                var previous: DisplayObject = null;
+                if (this.focusNeighborPrevious != null) {
+                    previous = this.focusNeighborPrevious.getChild(this);
+                    if (previous == null || !flashswing.controls.isFocusable(previous)) {
+                        throw new Error("Specified focusNeighborPrevious resolves to no object or is not focusable.");
+                    }
+                } else {
+                    previous = Hierarchy.previousFocusTarget(this);
+                }
+                if (previous != null) {
+                    this.stage.focus = previous as InteractiveObject;
+                }
+            // up focus
+            } else if (app.getAction("uiUp").matchesKeyboardEvent(event)) {
+                if (this.focusNeighborUp != null) {
+                    pointedTo = this.focusNeighborUp.getChild(this);
+                    if (pointedTo == null || !flashswing.controls.isFocusable(pointedTo)) {
+                        throw new Error("Specified focusNeighborUp resolves to no object or is not focusable.");
+                    }
+                    this.stage.focus = pointedTo as InteractiveObject;
+                }
+            // down focus
+            } else if (app.getAction("uiDown").matchesKeyboardEvent(event)) {
+                if (this.focusNeighborDown != null) {
+                    pointedTo = this.focusNeighborDown.getChild(this);
+                    if (pointedTo == null || !flashswing.controls.isFocusable(pointedTo)) {
+                        throw new Error("Specified focusNeighborDown resolves to no object or is not focusable.");
+                    }
+                    this.stage.focus = pointedTo as InteractiveObject;
+                }
+            // left focus
+            } else if (app.getAction("uiLeft").matchesKeyboardEvent(event)) {
+                if (this.focusNeighborLeft != null) {
+                    pointedTo = this.focusNeighborLeft.getChild(this);
+                    if (pointedTo == null || !flashswing.controls.isFocusable(pointedTo)) {
+                        throw new Error("Specified focusNeighborLeft resolves to no object or is not focusable.");
+                    }
+                    this.stage.focus = pointedTo as InteractiveObject;
+                }
+            // right focus
+            } else if (app.getAction("uiRight").matchesKeyboardEvent(event)) {
+                if (this.focusNeighborRight != null) {
+                    pointedTo = this.focusNeighborRight.getChild(this);
+                    if (pointedTo == null || !flashswing.controls.isFocusable(pointedTo)) {
+                        throw new Error("Specified focusNeighborRight resolves to no object or is not focusable.");
+                    }
+                    this.stage.focus = pointedTo as InteractiveObject;
+                }
+            }
         }
 
         private function updateSizeOuter(): void {

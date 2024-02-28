@@ -47,5 +47,7 @@ package agera.input {
             result.functionKey = this.functionKey;
             return result;
         }
+
+        public function matchesKeyboardEvent(event: KeyboardEvent): Boolean {}
     }
 }
