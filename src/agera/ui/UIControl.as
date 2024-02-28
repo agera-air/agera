@@ -15,6 +15,23 @@ package agera.ui {
      * The base class used for user interface controls.
      */
     public class UIControl extends Sprite {
+        // Used as output when calculating outer size.
+        private static const SIBLINGS: Vector.<UIControl> = new <UIControl> [];
+
+        /**
+         * Indicates the minimum outer width of the control.
+         */
+        public var widthMinimum: Number = 0;
+
+        /**
+         * Indicates the minimum outer height of the control.
+         */
+        public var heightMinimum: Number = 0;
+
+        private var mWidthOuter: Number = 0;
+
+        private var mHeightOuter: Number = 0;
+
         /**
          * Specifies the focus mode for the control. This is
          * used to disable focus for a specific control,
@@ -82,6 +99,7 @@ package agera.ui {
          */
         public var focusNeighborNext: String = null;
 
+        // Layout stretch ratio is not yet supported.
         /**
          * If this control and at least one of its neighbors are set to expand in the layout,
          * the parent container will let it take more or less space depending
@@ -89,7 +107,7 @@ package agera.ui {
          * and its neighbor a stretch ratio of 1, this control will take
          * two thirds of the available space.
          */
-        public var layoutStretchRatio: Number = 1;
+        private var mLayoutStretchRatio: Number = 1;
 
         private var mLayoutHorizontalSizing: LayoutSizing = new LayoutSizing({
             fill: true
@@ -134,14 +152,14 @@ package agera.ui {
             self.addEventListener(FocusEvent.FOCUS_IN, self.UIControl_handleFocusEvent);
             self.addEventListener(FocusEvent.FOCUS_OUT, self.UIControl_handleFocusEvent);
             self.addEventListener(Event.ENTER_FRAME, function(evt: Event): void {
-                var prevWidth: Number = self._outerWidth;
-                var prevHeight: Number = self._outerHeight;
-                self._updateControlSize();
-                var sizeChanged: Boolean = prevWidth != self._outerWidth || prevHeight != self._outerHeight;
+                var prevWidth: Number = self.mWidthOuter;
+                var prevHeight: Number = self.mHeightOuter;
+                self.updateSizeOuter();
+                var sizeChanged: Boolean = prevWidth != self.mWidthOuter || prevHeight != self.mHeightOuter;
                 if (self.mClipContents && (sizeChanged || !self.mMaskDrawn)) {
                     self.mMask.graphics.clear();
                     self.mMask.graphics.beginFill(0);
-                    self.mMask.graphics.drawRect(0, 0, self._outerWidth, self._outerHeight);
+                    self.mMask.graphics.drawRect(0, 0, self.mWidthOuter, self.mHeightOuter);
                     self.mMask.graphics.endFill();
                     self.mMaskDrawn = true;
                 }
@@ -156,6 +174,66 @@ package agera.ui {
          */
         public final function get theme(): UIControlTheme {
             return new UIControlTheme(this);
+        }
+
+        /**
+         * Read-only left padding derived from the control's theme.
+         */
+        public function get paddingLeft(): Number {
+            var props: * = this.theme.properties;
+            var padding: * = props.padding;
+            if (typeof padding == "number") {
+                return padding;
+            }
+            if (typeof padding == "object" && typeof padding.left == "number") {
+                return padding.left;
+            }
+            return 0;
+        }
+
+        /**
+         * Read-only right padding derived from the control's theme.
+         */
+        public function get paddingRight(): Number {
+            var props: * = this.theme.properties;
+            var padding: * = props.padding;
+            if (typeof padding == "number") {
+                return padding;
+            }
+            if (typeof padding == "object" && typeof padding.right == "number") {
+                return padding.right;
+            }
+            return 0;
+        }
+
+        /**
+         * Read-only left padding derived from the control's theme.
+         */
+        public function get paddingTop(): Number {
+            var props: * = this.theme.properties;
+            var padding: * = props.padding;
+            if (typeof padding == "number") {
+                return padding;
+            }
+            if (typeof padding == "object" && typeof padding.top == "number") {
+                return padding.top;
+            }
+            return 0;
+        }
+
+        /**
+         * Read-only bottom padding derived from the control's theme.
+         */
+        public function get paddingBottom(): Number {
+            var props: * = this.theme.properties;
+            var padding: * = props.padding;
+            if (typeof padding == "number") {
+                return padding;
+            }
+            if (typeof padding == "object" && typeof padding.bottom == "number") {
+                return padding.bottom;
+            }
+            return 0;
         }
 
         /**
@@ -241,6 +319,94 @@ package agera.ui {
          */
         public function updateSkin(): void {
             this.dispatchEvent(new AgeraEvent(AgeraEvent.UPDATE_SKIN));
+        }
+
+        private function UIControl_handleFocusEvent(event: FocusEvent): void {
+            this.updateSkin();
+        }
+
+        private function updateSizeOuter(): void {
+            this.mWidthOuter = this.widthMinimum;
+            this.mHeightOuter = this.heightMinimum;
+            var parentControl: UIControl = this.parent as UIControl;
+            if (parentControl != null) {
+                // - Expand?
+                //   - Neighbors set to expand in the same direction
+                //     are expanded by dividing the available space
+                //     and taking the stretch ratio of each control
+                //     into consideration.
+                // - Sizing?
+                if (this.mLayoutHorizontalSizing != null && this.mLayoutHorizontalSizing.expand) {
+                    this.UIControl_expandControlWidth(parentControl);
+                }
+                if (this.mLayoutVerticalSizing != null && this.mLayoutVerticalSizing.expand) {
+                    this.UIControl_expandControlHeight(parentControl);
+                }
+            }
+        }
+
+        private function UIControl_expandControlWidth(parentControl: UIControl): void {
+            UIControl_Hierarchy.neighborExpandControls(this, SIBLINGS);
+            SIBLINGS.push(this);
+            var siblingsTotalWidth: Number = 0;
+            for each (var sibling: UIControl in SIBLINGS) {
+                sibling.mWidthOuter = sibling.widthMinimum;
+                siblingsTotalWidth +=
+                    sibling.mWidthOuter +
+                    sibling.paddingLeft + sibling.paddingRight;
+            }
+            var gapTotal: Number = parentControl.gap * (SIBLINGS.length - 1);
+            var delta: Number = parentControl.widthInner - (siblingsTotalWidth + gapTotal);
+            this.mWidthOuter += delta < 0 ? 0 : delta / SIBLINGS.length;
+            SIBLINGS.length = 0;
+        }
+
+        private function UIControl_expandControlHeight(parentControl: UIControl): void {
+            UIControl_Hierarchy.neighborExpandControls(this, SIBLINGS);
+            SIBLINGS.push(this);
+            var siblingsTotalHeight: Number = 0;
+            for each (var sibling: UIControl in SIBLINGS) {
+                sibling.mHeightOuter = sibling.heightMinimum;
+                siblingsTotalHeight +=
+                    sibling.mHeightOuter +
+                    sibling.paddingTop + sibling.paddingBottom;
+            }
+            var gapTotal: Number = parentControl.gap * (SIBLINGS.length - 1);
+            var delta: Number = parentControl.heightInner - (siblingsTotalHeight + gapTotal);
+            this.mHeightOuter += delta < 0 ? 0 : delta / SIBLINGS.length;
+            SIBLINGS.length = 0;
+        }
+
+        /**
+         * Returns the inner width of a control; that is, the width available inside.
+         * This is usually <code>widthOuter - strokeSize - scrollBarWidth</code>.
+         */
+        public function get widthInner(): Number {
+            throw new Error("widthInner is not implemented for " + String(this));
+        }
+
+        /**
+         * Returns the inner height of a control; that is, the height available inside.
+         * This is usually <code>heightOuter - strokeSize - scrollBarHeight</code>.
+         */
+        public function get heightInner(): Number {
+            throw new Error("heightInner is not implemented for " + String(this));
+        }
+
+        /**
+         * Returns the computed width of a control. This property is
+         * updated on every frame to reflect the actual width.
+         */
+        public function get widthOuter(): Number {
+            return this.mWidthOuter;
+        }
+
+        /**
+         * Returns the computed height of a control. This property is
+         * updated on every frame to reflect the actual height.
+         */
+        public function get heightOuter(): Number {
+            return this.mHeightOuter;
         }
     }
 }
