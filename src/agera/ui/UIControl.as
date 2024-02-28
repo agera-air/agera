@@ -77,7 +77,7 @@ package agera.ui {
          * Tells whether the control may receive focus.
          */
         public function get focusable(): Boolean {
-            return !this.disabled && this.focusMode != FocusMode.NONE;
+            return this.visible && !this.disabled && this.focusMode != FocusMode.NONE;
         }
 
         /**
