@@ -63,6 +63,7 @@ package agera.input {
          *   <li><code>"navigateDown"</code> — Down navigation in the user interface.</li>
          *   <li><code>"focusPrevious"</code> — Focus previous element in the user interface.</li>
          *   <li><code>"focusNext"</code> — Focus next element in the user interface.</li>
+         *   <li><code>"escape"</code> — Escapes the user interface, typically the Esc key.</li>
          * </ul>
          * </p>
          */
@@ -81,6 +82,8 @@ package agera.input {
                         .setShiftKey(true)),
                 new InputAction("focusNext")
                     .key(new InputKey(Keyboard.TAB)),
+                new InputAction("escape")
+                    .key(new InputKey(Keyboard.ESCAPE)),
             ]);
         }
 
