@@ -140,7 +140,7 @@ package agera.ui {
         public function UIControl() {
             super();
             var self: UIControl = this;
-            self.addEventListener(KeyboardEvent.KEY_DOWN, self.UIControl_handleKeyDownEvent);
+            // self.addEventListener(KeyboardEvent.KEY_DOWN, self.UIControl_handleKeyDownEvent);
             self.addEventListener(FocusEvent.FOCUS_IN, self.UIControl_handleFocusEvent);
             self.addEventListener(FocusEvent.FOCUS_OUT, self.UIControl_handleFocusEvent);
             self.addEventListener(Event.ENTER_FRAME, function(evt: Event): void {
@@ -294,10 +294,11 @@ package agera.ui {
 
         /**
          * Tells whether the control currently has focus.
-         */
+         *
         public function get hasFocus(): Boolean {
             return this.focusable && (this is TextInput ? this.stage.focus == this.getChildByName("_textField") : this.stage.focus == this);
         }
+        */
 
         /**
          * Focuses the control.
@@ -317,6 +318,7 @@ package agera.ui {
             this.updateSkin();
         }
 
+        /*
         private function UIControl_handleKeyDownEvent(event: KeyboardEvent): void {
             // # focus switch
 
@@ -393,6 +395,7 @@ package agera.ui {
                 }
             }
         }
+        */
 
         private function updateSizeOuter(): void {
             this.mWidthOuter = this.widthMinimum;

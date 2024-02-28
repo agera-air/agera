@@ -10,7 +10,7 @@
 
 # Agera for AIR
 
-Agera is a framework for Samsung HARMAN AIR supporting input actions, user interface and miscellaneous.
+Agera is a framework for Samsung HARMAN AIR supporting input actions and miscellaneous.
 
 ## What is available now
 
